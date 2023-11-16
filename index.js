@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const { Server } = require('socket.io');
-const mongoose = require('mongoose');
-const { CodeModel } = require('./codemodel');
+// const mongoose = require('mongoose');
+// const { CodeModel } = require('./codemodel');
 const cors = require('cors');
 
 
@@ -12,11 +12,11 @@ const io = new Server(server);
 
 app.use(cors());
 
-mongoose.connect('mongodb+srv://mayankkashyap705487:root@cluster0.huczc4n.mongodb.net/?retryWrites=true&w=majority/socketChat').then(() => {
-    console.log('Database Connected');
-}).catch((err) => {
-    console.log('There is some error', err);
-});
+// mongoose.connect('mongodb+srv://mayankkashyap705487:root@cluster0.huczc4n.mongodb.net/?retryWrites=true&w=majority/socketChat').then(() => {
+//     console.log('Database Connected');
+// }).catch((err) => {
+//     console.log('There is some error', err);
+// });
 
 var idUserMap = {};
 var typingMap = {};
@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
 
         // console.log(roomId, userName)
         try {
-            const existingCode = await CodeModel.findOne({ roomId });
+            // const existingCode = await CodeModel.findOne({ roomId });
 
             // console.log(existingCode)
             if (existingCode) {
@@ -102,15 +102,15 @@ io.on('connection', (socket) => {
         });
 
         // Save the new code to MongoDB
-        try {
-            await CodeModel.findOneAndUpdate(
-                { roomId },
-                { roomId, code },
-                { upsert: true }
-            );
-        } catch (error) {
-            console.error('Error saving code to MongoDB:', error);
-        }
+        // try {
+        //     await CodeModel.findOneAndUpdate(
+        //         { roomId },
+        //         { roomId, code },
+        //         { upsert: true }
+        //     );
+        // } catch (error) {
+        //     console.error('Error saving code to MongoDB:', error);
+        // }
     });
 
     socket.on('langchange', ({ roomId, language, code }) => {
